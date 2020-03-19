@@ -22,6 +22,7 @@ public class DriverFactory {
         } else {
             browserName.equalsIgnoreCase("firefox");
             return new FirefoxDriver();
+
         }
     }
 }
