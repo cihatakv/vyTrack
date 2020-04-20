@@ -2,7 +2,6 @@ package com.automation.test;
 
 import com.automation.utilities.BrowserUtils;
 import com.automation.utilities.DriverFactory;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,10 +16,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class TestCases1Thru5 {
-
     private WebDriver driver;
     private String URL = "https://practice-cybertekschool.herokuapp.com";
-
     private By registration_formBy = By.linkText("Registration Form");
 
     private By firstNameBy = By.name("firstname"); // private By firstNameBy = By.xpath("//input[@name='firstname']"); // Xpath practice
@@ -34,21 +31,17 @@ public class TestCases1Thru5 {
     private By departmentBy = By.xpath("//select[@name='department']");
     private By job_titleBy = By.xpath("//select[@name='job_title']");
 
-    //label[text()='C++']/preceding-sibling::input
     private By cPlusPlusBy = By.xpath("//label[text()='C++']/preceding-sibling::input");
     private By javaBy = By.xpath("//label[text()='Java']/preceding-sibling::input");
     private By javaScriptBy = By.xpath("//label[text()='JavaScript']/preceding-sibling::input");
 
     private By signUpBtnBy = By.xpath("//button[@id='wooden_spoon']");
 
-    // By.name("firstname")
-
-    // (//small[@data-bv-validator='stringLength'])[1]
     private By firstNameLengthBy = By.xpath("(//small[@data-bv-validator='stringLength'])[1]");
     private By lastNameLengthBy = By.xpath("(//small[@data-bv-validator='stringLength'])[2]");
 
     @Test(description = "Test Case #1")
-    public void testCase1() {
+    public void registrationFormBirthDayTest() {
         driver.findElement(birthdayBy).sendKeys("wrong_dob");
         BrowserUtils.wait(1);
         String expected = "The date of birth is not valid";
@@ -58,7 +51,7 @@ public class TestCases1Thru5 {
     }
 
     @Test(description = "Test Case #2")
-    public void testCase2() {
+    public void registrationFormLanguageTest() {
         boolean isCPlusPlusDisplayed = driver.findElement(cPlusPlusBy).isDisplayed();
         boolean isJavaDisplayed = driver.findElement(javaBy).isDisplayed();
         boolean isJavaScriptDisplayed = driver.findElement(javaScriptBy).isDisplayed();
@@ -66,7 +59,7 @@ public class TestCases1Thru5 {
     }
 
     @Test(description = "Test Case #3")
-    public void testCase3() {
+    public void registrationFormFirstNameTest() {
         // first name must be more than 2 and less than 64 characters long
         driver.findElement(firstNameBy).sendKeys("a");
         BrowserUtils.wait(2);
@@ -77,7 +70,7 @@ public class TestCases1Thru5 {
     }
 
     @Test(description = "Test Case #4")
-    public void testCase4() {
+    public void registrationFormLastNameTest() {
         // The last name must be more than 2 and less than 64 characters long
         driver.findElement(lastNameBy).sendKeys("a");
         BrowserUtils.wait(2);
@@ -88,7 +81,7 @@ public class TestCases1Thru5 {
     }
 
     @Test(description = "Test Case #5")
-    public void testCase5() {
+    public void registrationFormCompleteTest() {
         Student s1 = new Student("Ali", "As", "ljlkjlkjlk", "alksjdlkasdj@dada.com", "pa$$w0rd", "713-713-7137", "01/01/1985");
         driver.findElement(firstNameBy).sendKeys(s1.firstName);
         driver.findElement(lastNameBy).sendKeys(s1.lastName);
@@ -115,8 +108,7 @@ public class TestCases1Thru5 {
 
     @BeforeMethod
     public void setup() {
-        WebDriverManager.chromedriver().version("79").setup();
-        driver = new ChromeDriver();
+        driver = DriverFactory.createADriver("chrome");
         driver.get(URL);
         driver.manage().window().maximize();
         BrowserUtils.wait(2);
